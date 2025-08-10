@@ -5,6 +5,7 @@
 #include "cell.h"
 
 #include <iostream>
+#include <string>
 #include <utility>
 #include <algorithm>
 #include <sstream>
@@ -46,11 +47,10 @@ cell cell::operator^(cell &obj) const {
 }
 
 std::string cell::to_string() {
-    // if(this->pixel.empty()) return "";
-    std::string output;
+    if(this->pixel.empty()) return "";
+    std::string output = std::to_string(this->state);
     for(auto const& [key, val] : this->pixel) {
-        /*if(val > 0) output += std::to_string(val) + key + "+";*/
-        if(val > 0) output += std::to_string(val%2) + key + "+";
+        if(val > 0) output += std::to_string(val) + key + "+";
     }
     if(!output.empty()) pop_utf8(output);
     return output;
