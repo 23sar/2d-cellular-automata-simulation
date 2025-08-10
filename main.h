@@ -14,6 +14,7 @@ typedef struct State {
 	int rows;
 	int z;
 	int rule;
+	int bound;
 	int it;
 	float screenWidth;
 	float screenHeight;

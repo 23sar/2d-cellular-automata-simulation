@@ -17,6 +17,7 @@ bool sizeXEditMode = false;
 bool sizeYEditMode = false;
 bool ruleEditMode = false;
 bool baseEditMode = false;
+bool boundEditMode = false;
 bool toggleGrid = true;
 
 int main() {
@@ -151,7 +152,7 @@ void DrawGridScene(void) {
 
 	if(GuiButton((Rectangle){posX, Yend +100.0f, 80.0f, 20.0f}, "Start")) {
 		state.it = 0;
-		CA = new cellular_automata(state.rule, state.cols, state.rows, state.z, image);
+		CA = new cellular_automata(state.rule, state.cols, state.rows, state.z, state.bound, image);
 		if(state.gen_coeffs) {
 			std::string directory = "rule"+std::to_string(state.rule);
 			CA->export_image(directory+"/"+std::to_string(state.it)+"_iteration.csv");
@@ -192,12 +193,19 @@ void DrawConfigScene(void) {
 		ruleEditMode = !ruleEditMode;
 	}
 
-	GuiCheckBox((Rectangle){posX-40.0f, posY+ 120, 20.0f, 20.0f}, 
+	if(GuiValueBox((Rectangle){posX, posY + 120, 100.0f, 20.0f}, 
+								"Bound:    ", 
+								&state.bound, 0, 9, boundEditMode)) 
+	{
+		boundEditMode = !boundEditMode;
+	}
+
+	GuiCheckBox((Rectangle){posX-40.0f, posY+ 150, 20.0f, 20.0f}, 
 						 "Generate Coefficient Files", &state.gen_coeffs);
 
 
 
-	if(GuiButton((Rectangle){posX, posY +150, 80.0f, 20.0f}, "Generate")) {
+	if(GuiButton((Rectangle){posX, posY +180, 80.0f, 20.0f}, "Generate")) {
 		if(state.gen_coeffs) {
 			std::string directory = "rule"+std::to_string(state.rule);
 			std::filesystem::create_directory(directory);

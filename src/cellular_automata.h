@@ -15,17 +15,17 @@
 class cellular_automata {
     Size size;
     int base;
+		int bound;
     long long int r;
     std::array<int, 9> rule{};
     std::vector<std::pair<short, short>> neighbours;
-    /*std::array<int, 9> neighbours;*/
     std::stack<std::vector<cell>> undo;
 
 public:
     std::vector<cell> grid;
 
-    cellular_automata(int rule, int x, int y, int base);
-    cellular_automata(int rule, int x, int y, int base, const std::vector<cell>& image);
+    cellular_automata(int rule, int x, int y, int base, int bound);
+    cellular_automata(int rule, int x, int y, int base, int bound, const std::vector<cell>& image);
     void evolutions(int n);
     void step();
     void step(const std::string& filename);

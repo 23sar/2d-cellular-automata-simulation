@@ -9,24 +9,26 @@
 #include "cellular_automata.h"
 #include "cell.h"
 
-cellular_automata::cellular_automata(int rule, int x, int y, int base) {
+cellular_automata::cellular_automata(int rule, int x, int y, int base, int bound) {
     this->base = base;
     this->r = rule;
     set_rule(rule);
     set_neighbours();
     this->size.x = x;
     this->size.y = y;
+		this->bound = bound;
     grid.assign(x*y, cell(this->base, this->base));
     undo.push(grid);
 }
 
-cellular_automata::cellular_automata(int rule, int x, int y, int base, const std::vector<cell>& image) {
+cellular_automata::cellular_automata(int rule, int x, int y, int base, int bound, const std::vector<cell>& image) {
     this->base = base;
     this->r = rule;
     set_rule(rule);
     set_neighbours();
     this->size.x = x;
     this->size.y = y;
+		this->bound = bound;
     grid = std::move(image);
     undo.push(grid);
     // std::cout << "INITIAL STATE" << std::endl;
@@ -178,13 +180,13 @@ void cellular_automata::increase_size() {
     int offset = 0;
     for (int i = 0; i < size.y; ++i) {
         const int beg_pos = get_pos(0, i);
-        temp.insert(temp.begin()+beg_pos+offset++, cell(0, this->base));
+        temp.insert(temp.begin()+beg_pos+offset++, cell(this->bound, this->base));
         const int end_pos = get_pos(size.x, i);
-        temp.insert(temp.begin()+end_pos+offset++, cell(0, this->base));
+        temp.insert(temp.begin()+end_pos+offset++, cell(this->bound, this->base));
     }
     size.x += 2;
     size.y += 2;
-    std::vector<cell> temp2(size.x, cell(0, base));
+    std::vector<cell> temp2(size.x, cell(this->bound, base));
     temp.insert(temp.begin(), temp2.begin(), temp2.end());
     temp.insert(temp.end(), temp2.begin(), temp2.end());
     grid = temp;
