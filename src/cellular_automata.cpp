@@ -62,6 +62,9 @@ void cellular_automata::step() {
                 if(is_inbounds(j+x, i+y)){
                     int neighbour_pos = get_pos(j+x, i+y);
                     state = state ^ grid[neighbour_pos];
+                } else {
+                    cell bound_cell(this->bound, this->base, "");
+                    state = state ^ bound_cell;
                 }
             }
             temp[pos] = state;

@@ -195,7 +195,7 @@ void DrawConfigScene(void) {
 
 	if(GuiValueBox((Rectangle){posX, posY + 120, 100.0f, 20.0f}, 
 								"Bound:    ", 
-								&state.bound, 0, 9, boundEditMode)) 
+								&state.bound, 0, state.z-1, boundEditMode)) 
 	{
 		boundEditMode = !boundEditMode;
 	}

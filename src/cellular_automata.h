@@ -15,7 +15,7 @@
 class cellular_automata {
     Size size;
     int base;
-		int bound;
+	int bound;
     long long int r;
     std::array<int, 9> rule{};
     std::vector<std::pair<short, short>> neighbours;
